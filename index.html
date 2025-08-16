@@ -302,9 +302,11 @@
     <div class="container">
         <div class="header">
                         <h1>PDP Sanjai</h1>
-                                                <h1>9842183134</h1>
+                                                <h2>Tisayanvilai</h2>
 
-            <h1>Fiber Optic Coupler Loss Calculator</h1>
+                                                <h2>9842183134</h2>
+
+            <h3>Fiber Optic Coupler Loss Calculator</h3>
             <p>Calculate insertion loss and power distribution for fiber optic couplers</p>
         </div>
 
@@ -440,9 +442,11 @@
                 const portDiv = document.createElement('div');
                 portDiv.className = 'port-ratio';
                 portDiv.innerHTML = `
+                <div>
                     <label>Port ${i}:</label>
                     <input type="number" id="port${i}Ratio" value="${defaultRatio}" step="0.1" min="0" max="100">
                     <span>%</span>
+                    </div>
                 `;
                 container.appendChild(portDiv);
             }
@@ -465,75 +469,76 @@
         function dBmToMW(dBm) {
             return Math.pow(10, dBm / 10);
         }
+function calculateLoss() {
+    hideError();
 
-        function calculateLoss() {
-            hideError();
+    // Get input values
+    const inputPowerValue = parseFloat(document.getElementById('inputPower').value);
+    const powerUnit = document.getElementById('powerUnit').value;
+    const numPorts = parseInt(document.getElementById('numPorts').value);
 
-            // Get input values
-            const inputPowerValue = parseFloat(document.getElementById('inputPower').value);
-            const powerUnit = document.getElementById('powerUnit').value;
-            const numPorts = parseInt(document.getElementById('numPorts').value);
+    // Validate input power
+    if (isNaN(inputPowerValue)) {
+        showError('Please enter a valid input power value.');
+        return;
+    }
 
-            // Validate input power
-            if (isNaN(inputPowerValue)) {
-                showError('Please enter a valid input power value.');
-                return;
-            }
+    // Validation rules:
+    if (powerUnit === 'mW' && inputPowerValue <= 0) {
+        showError('Input power in mW must be greater than 0.');
+        return;
+    }
+    // For dBm, negative values are valid, so no need to block them
 
-            if (inputPowerValue <= 0) {
-                showError('Input power must be greater than 0.');
-                return;
-            }
+    // Convert input power to mW if needed
+    let inputPowerMW;
+    if (powerUnit === 'dBm') {
+        inputPowerMW = dBmToMW(inputPowerValue);
+    } else {
+        inputPowerMW = inputPowerValue;
+    }
 
-            // Convert input power to mW if needed
-            let inputPowerMW;
-            if (powerUnit === 'dBm') {
-                inputPowerMW = dBmToMW(inputPowerValue);
-            } else {
-                inputPowerMW = inputPowerValue;
-            }
+    // Get splitting ratios and validate
+    const ratios = [];
+    let totalRatio = 0;
 
-            // Get splitting ratios and validate
-            const ratios = [];
-            let totalRatio = 0;
-
-            for (let i = 1; i <= numPorts; i++) {
-                const ratio = parseFloat(document.getElementById(`port${i}Ratio`).value);
-                if (isNaN(ratio) || ratio < 0) {
-                    showError(`Please enter a valid ratio for Port ${i}.`);
-                    return;
-                }
-                ratios.push(ratio);
-                totalRatio += ratio;
-            }
-
-            // Validate total ratio
-            if (Math.abs(totalRatio - 100) > 0.1) {
-                showError(`Total splitting ratio must equal 100%. Current total: ${totalRatio.toFixed(1)}%`);
-                return;
-            }
-
-            // Calculate results
-            const results = [];
-            for (let i = 0; i < numPorts; i++) {
-                const splitRatio = ratios[i] / 100;
-                const outputPowerMW = inputPowerMW * splitRatio;
-                const outputPowerDbm = mWToDbm(outputPowerMW);
-                
-                // Calculate insertion loss: Loss = 10 * log10(Pin / Pout)
-                const insertionLoss = 10 * Math.log10(inputPowerMW / outputPowerMW);
-
-                results.push({
-                    port: i + 1,
-                    splitRatio: ratios[i],
-                    outputPowerMW: outputPowerMW,
-                    outputPowerDbm: outputPowerDbm,
-                    insertionLoss: insertionLoss
-                });
-            }
-
-            displayResults(results);
+    for (let i = 1; i <= numPorts; i++) {
+        const ratio = parseFloat(document.getElementById(`port${i}Ratio`).value);
+        if (isNaN(ratio) || ratio < 0) {
+            showError(`Please enter a valid ratio for Port ${i}.`);
+            return;
         }
+        ratios.push(ratio);
+        totalRatio += ratio;
+    }
+
+    // Validate total ratio
+    if (Math.abs(totalRatio - 100) > 0.1) {
+        showError(`Total splitting ratio must equal 100%. Current total: ${totalRatio.toFixed(1)}%`);
+        return;
+    }
+
+    // Calculate results
+    const results = [];
+    for (let i = 0; i < numPorts; i++) {
+        const splitRatio = ratios[i] / 100;
+        const outputPowerMW = inputPowerMW * splitRatio;
+        const outputPowerDbm = mWToDbm(outputPowerMW);
+        
+        // Calculate insertion loss: Loss = 10 * log10(Pin / Pout)
+        const insertionLoss = 10 * Math.log10(inputPowerMW / outputPowerMW);
+
+        results.push({
+            port: i + 1,
+            splitRatio: ratios[i],
+            outputPowerMW: outputPowerMW,
+            outputPowerDbm: outputPowerDbm,
+            insertionLoss: insertionLoss
+        });
+    }
+
+    displayResults(results);
+}
 
         function displayResults(results) {
             const tbody = document.getElementById('resultsBody');
