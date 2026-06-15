@@ -15,28 +15,44 @@
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         min-height: 100vh;
-        padding: 20px;
+        padding: 8px;
       }
 
       .container {
         max-width: 900px;
         margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
       }
 
       .header {
         text-align: center;
         color: white;
-        margin-bottom: 30px;
+        margin-bottom: 0;
       }
 
       .header h1 {
-        font-size: 2.5rem;
-        margin-bottom: 10px;
+        font-size: 1.2rem;
+        margin-bottom: 2px;
         text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
       }
 
+      .header h2 {
+        font-size: 0.8rem;
+        margin-bottom: 2px;
+        font-weight: 500;
+        opacity: 0.85;
+      }
+
+      .header h3 {
+        font-size: 0.95rem;
+        margin-top: 4px;
+        margin-bottom: 2px;
+      }
+
       .header p {
-        font-size: 1.1rem;
+        font-size: 0.75rem;
         opacity: 0.9;
       }
 
@@ -44,14 +60,14 @@
         background: white;
         border-radius: 15px;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        padding: 30px;
-        margin-bottom: 30px;
+        padding: 16px;
+        margin-bottom: 0;
       }
 
       .input-section {
         display: grid;
-        gap: 20px;
-        margin-bottom: 30px;
+        gap: 10px;
+        margin-bottom: 0;
       }
 
       .input-group {
@@ -62,13 +78,13 @@
       .input-group label {
         font-weight: 600;
         color: #333;
-        margin-bottom: 8px;
-        font-size: 0.95rem;
+        margin-bottom: 6px;
+        font-size: 0.9rem;
       }
 
       .input-group input,
       .input-group select {
-        padding: 12px 15px;
+        padding: 10px 12px;
         border: 2px solid #e1e5e9;
         border-radius: 8px;
         font-size: 1rem;
@@ -85,41 +101,60 @@
       }
 
       .power-input-row {
-        display: grid;
-        grid-template-columns: 1fr auto;
-        gap: 15px;
-        align-items: end;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .power-input-row input {
+        flex: 1 1 140px;
+      }
+
+      .power-input-row select {
+        flex: 1 1 80px;
+        max-width: 100px;
       }
 
       .splitting-section {
         background: #f8f9fa;
-        padding: 20px;
+        padding: 12px;
         border-radius: 10px;
-        margin-bottom: 20px;
+        margin-bottom: 0;
       }
 
       .splitting-section h3 {
         color: #333;
-        margin-bottom: 15px;
-        font-size: 1.1rem;
+        margin-bottom: 12px;
+        font-size: 1rem;
       }
 
       .ports-container {
         display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
         gap: 10px;
       }
 
       .port-ratio {
-        display: grid;
-        grid-template-columns: auto 1fr auto;
-        gap: 10px;
-        align-items: center;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 6px;
+        background: white;
+        border: 1px solid #e1e5e9;
+        border-radius: 8px;
+        padding: 10px;
       }
 
       .port-ratio label {
-        font-weight: 500;
+        font-weight: 600;
         color: #555;
-        min-width: 60px;
+        font-size: 0.85rem;
+      }
+
+      .port-ratio .ratio-input-wrap {
+        display: flex;
+        align-items: center;
+        gap: 6px;
       }
 
       .port-ratio input {
@@ -127,33 +162,34 @@
         border: 1px solid #ddd;
         border-radius: 5px;
         text-align: center;
+        width: 100%;
       }
 
       .preset-ratios {
-        margin-bottom: 20px;
+        margin-bottom: 15px;
       }
 
       .preset-ratios h4 {
         color: #555;
-        margin-bottom: 10px;
-        font-size: 0.95rem;
+        margin-bottom: 8px;
+        font-size: 0.9rem;
         font-weight: 500;
       }
 
       .preset-buttons {
         display: flex;
         flex-wrap: wrap;
-        gap: 8px;
-        margin-bottom: 15px;
+        gap: 6px;
+        margin-bottom: 10px;
       }
 
       .preset-btn {
         background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
         color: white;
         border: none;
-        padding: 6px 12px;
+        padding: 5px 10px;
         border-radius: 20px;
-        font-size: 0.85rem;
+        font-size: 0.8rem;
         font-weight: 500;
         cursor: pointer;
         transition: all 0.3s ease;
@@ -178,10 +214,10 @@
       .calculate-btn {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
-        padding: 15px 40px;
+        padding: 13px 40px;
         border: none;
         border-radius: 8px;
-        font-size: 1.1rem;
+        font-size: 1.05rem;
         font-weight: 600;
         cursor: pointer;
         transition: all 0.3s ease;
@@ -208,13 +244,13 @@
       }
 
       .results-section {
-        margin-top: 30px;
+        margin-top: 20px;
       }
 
       .results-section h2 {
         color: #333;
-        margin-bottom: 20px;
-        font-size: 1.3rem;
+        margin-bottom: 15px;
+        font-size: 1.2rem;
       }
 
       .results-table {
@@ -229,13 +265,13 @@
       .results-table th {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
-        padding: 15px;
+        padding: 12px;
         text-align: left;
         font-weight: 600;
       }
 
       .results-table td {
-        padding: 12px 15px;
+        padding: 10px 12px;
         border-bottom: 1px solid #eee;
       }
 
@@ -253,21 +289,16 @@
       }
 
       @media (max-width: 768px) {
-        .header h1 {
-          font-size: 2rem;
-        }
-
         .card {
-          padding: 20px;
+          padding: 15px;
         }
 
         .power-input-row {
           grid-template-columns: 1fr;
         }
 
-        .port-ratio {
-          grid-template-columns: 1fr;
-          text-align: center;
+        .ports-container {
+          grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
         }
 
         .preset-buttons {
@@ -275,56 +306,70 @@
         }
 
         .preset-btn {
-          font-size: 0.8rem;
-          padding: 5px 10px;
+          font-size: 0.75rem;
+          padding: 4px 9px;
         }
 
         .results-table {
-          font-size: 0.9rem;
+          font-size: 0.85rem;
         }
 
         .results-table th,
         .results-table td {
-          padding: 10px 8px;
+          padding: 8px 6px;
         }
       }
 
       @media (max-width: 480px) {
         .results-table {
-          font-size: 0.8rem;
+          font-size: 0.75rem;
         }
       }
 
       .hidden {
         display: none;
       }
+      .footer {
+        max-width: 900px;
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        padding: 8px 16px;
+        color: white;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        font-size: 0.8rem;
+        opacity: 0.9;
+      }
+
+      .footer .dot {
+        opacity: 0.5;
+      }
       .highlight {
-        background: #ffd54f; /* warm yellow highlight */
+        background: #ffd54f;
         color: #000;
         font-weight: 700;
       }
       .highlight-col {
-    background: #ff9800; /* Orange highlight */
-    color: white;
-    text-align: center;
-}
-.results-table td.highlight-col {
-    font-weight: bold;
-    color: #ff5722;
-    background: #fff3e0;
-    text-align: center;
-}
-
+        background: #ff9800;
+        color: white;
+        text-align: center;
+      }
+      .results-table td.highlight-col {
+        font-weight: bold;
+        color: #ff5722;
+        background: #fff3e0;
+        text-align: center;
+      }
     </style>
   </head>
   <body>
     <div class="container">
       <div class="header">
-        <h1>PDP Sanjai</h1>
-        <h2>Tisayanvilai</h2>
-
-        <h2>9842183134</h2>
-
         <h3>Fiber Optic Coupler Loss Calculator</h3>
         <p>
           Calculate insertion loss and power distribution for fiber optic
@@ -365,104 +410,20 @@
             <div id="presetRatios" class="preset-ratios">
               <h4>Quick Presets (for 2-port couplers):</h4>
               <div class="preset-buttons">
-                <button
-                  type="button"
-                  class="preset-btn"
-                  onclick="applyPresetRatio('99:1')"
-                >
-                  99:1
-                </button>
-                <button
-                  type="button"
-                  class="preset-btn"
-                  onclick="applyPresetRatio('98:2')"
-                >
-                  98:2
-                </button>
-                <button
-                  type="button"
-                  class="preset-btn"
-                  onclick="applyPresetRatio('97:3')"
-                >
-                  97:3
-                </button>
-                <button
-                  type="button"
-                  class="preset-btn"
-                  onclick="applyPresetRatio('96:4')"
-                >
-                  96:4
-                </button>
-                <button
-                  type="button"
-                  class="preset-btn"
-                  onclick="applyPresetRatio('95:5')"
-                >
-                  95:5
-                </button>
-                <button
-                  type="button"
-                  class="preset-btn"
-                  onclick="applyPresetRatio('90:10')"
-                >
-                  90:10
-                </button>
-                <button
-                  type="button"
-                  class="preset-btn"
-                  onclick="applyPresetRatio('85:15')"
-                >
-                  85:15
-                </button>
-                <button
-                  type="button"
-                  class="preset-btn"
-                  onclick="applyPresetRatio('80:20')"
-                >
-                  80:20
-                </button>
-                <button
-                  type="button"
-                  class="preset-btn"
-                  onclick="applyPresetRatio('75:25')"
-                >
-                  75:25
-                </button>
-                <button
-                  type="button"
-                  class="preset-btn"
-                  onclick="applyPresetRatio('70:30')"
-                >
-                  70:30
-                </button>
-                <button
-                  type="button"
-                  class="preset-btn"
-                  onclick="applyPresetRatio('65:35')"
-                >
-                  65:35
-                </button>
-                <button
-                  type="button"
-                  class="preset-btn"
-                  onclick="applyPresetRatio('60:40')"
-                >
-                  60:40
-                </button>
-                <button
-                  type="button"
-                  class="preset-btn"
-                  onclick="applyPresetRatio('55:45')"
-                >
-                  55:45
-                </button>
-                <button
-                  type="button"
-                  class="preset-btn"
-                  onclick="applyPresetRatio('50:50')"
-                >
-                  50:50
-                </button>
+                <button type="button" class="preset-btn" onclick="applyPresetRatio('99:1')">99:1</button>
+                <button type="button" class="preset-btn" onclick="applyPresetRatio('98:2')">98:2</button>
+                <button type="button" class="preset-btn" onclick="applyPresetRatio('97:3')">97:3</button>
+                <button type="button" class="preset-btn" onclick="applyPresetRatio('96:4')">96:4</button>
+                <button type="button" class="preset-btn" onclick="applyPresetRatio('95:5')">95:5</button>
+                <button type="button" class="preset-btn" onclick="applyPresetRatio('90:10')">90:10</button>
+                <button type="button" class="preset-btn" onclick="applyPresetRatio('85:15')">85:15</button>
+                <button type="button" class="preset-btn" onclick="applyPresetRatio('80:20')">80:20</button>
+                <button type="button" class="preset-btn" onclick="applyPresetRatio('75:25')">75:25</button>
+                <button type="button" class="preset-btn" onclick="applyPresetRatio('70:30')">70:30</button>
+                <button type="button" class="preset-btn" onclick="applyPresetRatio('65:35')">65:35</button>
+                <button type="button" class="preset-btn" onclick="applyPresetRatio('60:40')">60:40</button>
+                <button type="button" class="preset-btn" onclick="applyPresetRatio('55:45')">55:45</button>
+                <button type="button" class="preset-btn" onclick="applyPresetRatio('50:50')">50:50</button>
               </div>
             </div>
             <div id="portsContainer" class="ports-container">
@@ -481,19 +442,26 @@
           <h2>Results</h2>
           <table class="results-table">
             <thead>
-    <tr>
-        <th>Port</th>
-        <th>Split Ratio (%)</th>
-        <th>Insertion Loss (dB)</th>
-        <th class="highlight-col">Output Power (dBm)</th>
-    </tr>
-</thead>
-
+              <tr>
+                <th>Port</th>
+                <th>Split Ratio (%)</th>
+                <th>Insertion Loss (dB)</th>
+                <th class="highlight-col">Output Power (dBm)</th>
+              </tr>
+            </thead>
             <tbody id="resultsBody">
               <!-- Results will be populated here -->
             </tbody>
           </table>
         </div>
+      </div>
+
+      <div class="footer">
+        <span><strong>PDP Sanjai</strong></span>
+        <span class="dot">•</span>
+        <span>📍 Tisayanvilai</span>
+        <span class="dot">•</span>
+        <span>📞 9842183134</span>
       </div>
     </div>
 
@@ -505,28 +473,35 @@
       });
 
       // Generate port ratio inputs based on selected number of ports
-      document
-        .getElementById("numPorts")
-        .addEventListener("change", function () {
-          generatePortInputs();
-          updatePresetVisibility();
-        });
+      document.getElementById("numPorts").addEventListener("change", function () {
+        generatePortInputs();
+        updatePresetVisibility();
+      });
+
+      // Auto-calculate when input power or unit changes (if ratios are set)
+      document.getElementById("inputPower").addEventListener("input", function () {
+        tryAutoCalculate();
+      });
+      document.getElementById("powerUnit").addEventListener("change", function () {
+        tryAutoCalculate();
+      });
+
+      function tryAutoCalculate() {
+        const inputPowerValue = parseFloat(document.getElementById("inputPower").value);
+        if (!isNaN(inputPowerValue)) {
+          calculateLoss();
+        }
+      }
 
       function updatePresetVisibility() {
         const numPorts = parseInt(document.getElementById("numPorts").value);
         const presetSection = document.getElementById("presetRatios");
-
-        if (numPorts === 2) {
-          presetSection.style.display = "block";
-        } else {
-          presetSection.style.display = "none";
-        }
+        presetSection.style.display = numPorts === 2 ? "block" : "none";
       }
 
       function applyPresetRatio(ratioString) {
         const numPorts = parseInt(document.getElementById("numPorts").value);
 
-        // Only apply presets for 2-port couplers
         if (numPorts !== 2) {
           showError("Preset ratios are only available for 2-port couplers.");
           return;
@@ -544,6 +519,9 @@
         document.getElementById("port2Ratio").value = ratios[1];
 
         hideError();
+
+        // Auto-calculate immediately after applying preset
+        calculateLoss();
       }
 
       function generatePortInputs() {
@@ -551,19 +529,29 @@
         const container = document.getElementById("portsContainer");
         container.innerHTML = "";
 
-        const defaultRatio = Math.round((100 / numPorts) * 10) / 10; // Round to 1 decimal
+        const defaultRatio = Math.round((100 / numPorts) * 10) / 10;
 
         for (let i = 1; i <= numPorts; i++) {
           const portDiv = document.createElement("div");
           portDiv.className = "port-ratio";
           portDiv.innerHTML = `
-                <div>
-                    <label>Port ${i}:</label>
-                    <input type="number" id="port${i}Ratio" value="${defaultRatio}" step="0.1" min="0" max="100">
-                    <span>%</span>
-                    </div>
-                `;
+            <label>Port ${i}</label>
+            <div class="ratio-input-wrap">
+              <input type="number" id="port${i}Ratio" value="${defaultRatio}" step="0.1" min="0" max="100">
+              <span>%</span>
+            </div>
+          `;
           container.appendChild(portDiv);
+
+          // Auto-calculate when any port ratio input changes
+          setTimeout(() => {
+            const input = document.getElementById(`port${i}Ratio`);
+            if (input) {
+              input.addEventListener("input", function () {
+                tryAutoCalculate();
+              });
+            }
+          }, 0);
         }
       }
 
@@ -584,19 +572,17 @@
       function dBmToMW(dBm) {
         return Math.pow(10, dBm / 10);
       }
+
       function calculateLoss() {
         hideError();
 
-        // Get input values
-        const inputPowerValue = parseFloat(
-          document.getElementById("inputPower").value
-        );
+        const inputPowerValue = parseFloat(document.getElementById("inputPower").value);
         const powerUnit = document.getElementById("powerUnit").value;
         const numPorts = parseInt(document.getElementById("numPorts").value);
 
         // Validate input power
         if (isNaN(inputPowerValue)) {
-          showError("Please enter a valid input power value.");
+          // Silently skip if no power entered yet
           return;
         }
 
@@ -620,11 +606,11 @@
         let totalRatio = 0;
 
         for (let i = 1; i <= numPorts; i++) {
-          const ratio = parseFloat(
-            document.getElementById(`port${i}Ratio`).value
-          );
+          const ratioInput = document.getElementById(`port${i}Ratio`);
+          if (!ratioInput) return;
+          const ratio = parseFloat(ratioInput.value);
           if (isNaN(ratio) || ratio < 0) {
-            showError(`Please enter a valid ratio for Port ${i}.`);
+            // Silently skip if ratios not fully entered yet
             return;
           }
           ratios.push(ratio);
@@ -633,11 +619,12 @@
 
         // Validate total ratio
         if (Math.abs(totalRatio - 100) > 0.1) {
-          showError(
-            `Total splitting ratio must equal 100%. Current total: ${totalRatio.toFixed(
-              1
-            )}%`
-          );
+          // Only show error if user likely finished entering (total > 0)
+          if (totalRatio > 0) {
+            showError(
+              `Total splitting ratio must equal 100%. Current total: ${totalRatio.toFixed(1)}%`
+            );
+          }
           return;
         }
 
@@ -672,13 +659,9 @@
           row.innerHTML = `
             <td>Port ${result.port}</td>
             <td>${result.splitRatio.toFixed(1)}%</td>
-            <td>${result.insertionLoss.toFixed(
-              2
-            )} <span class="unit">dB</span></td>
-            <td class="highlight">${result.outputPowerDbm.toFixed(
-              2
-            )} <span class="unit">dBm</span></td>
-        `;
+            <td>${result.insertionLoss.toFixed(2)} <span class="unit">dB</span></td>
+            <td class="highlight">${result.outputPowerDbm.toFixed(2)} <span class="unit">dBm</span></td>
+          `;
           tbody.appendChild(row);
         });
 
