@@ -399,7 +399,6 @@
             <label for="numPorts">Number of Output Ports:</label>
             <select id="numPorts">
               <option value="2">2 Ports</option>
-              <option value="3">3 Ports</option>
               <option value="4">4 Ports</option>
               <option value="8">8 Ports</option>
             </select>
@@ -410,20 +409,104 @@
             <div id="presetRatios" class="preset-ratios">
               <h4>Quick Presets (for 2-port couplers):</h4>
               <div class="preset-buttons">
-                <button type="button" class="preset-btn" onclick="applyPresetRatio('99:1')">99:1</button>
-                <button type="button" class="preset-btn" onclick="applyPresetRatio('98:2')">98:2</button>
-                <button type="button" class="preset-btn" onclick="applyPresetRatio('97:3')">97:3</button>
-                <button type="button" class="preset-btn" onclick="applyPresetRatio('96:4')">96:4</button>
-                <button type="button" class="preset-btn" onclick="applyPresetRatio('95:5')">95:5</button>
-                <button type="button" class="preset-btn" onclick="applyPresetRatio('90:10')">90:10</button>
-                <button type="button" class="preset-btn" onclick="applyPresetRatio('85:15')">85:15</button>
-                <button type="button" class="preset-btn" onclick="applyPresetRatio('80:20')">80:20</button>
-                <button type="button" class="preset-btn" onclick="applyPresetRatio('75:25')">75:25</button>
-                <button type="button" class="preset-btn" onclick="applyPresetRatio('70:30')">70:30</button>
-                <button type="button" class="preset-btn" onclick="applyPresetRatio('65:35')">65:35</button>
-                <button type="button" class="preset-btn" onclick="applyPresetRatio('60:40')">60:40</button>
-                <button type="button" class="preset-btn" onclick="applyPresetRatio('55:45')">55:45</button>
-                <button type="button" class="preset-btn" onclick="applyPresetRatio('50:50')">50:50</button>
+                <button
+                  type="button"
+                  class="preset-btn"
+                  onclick="applyPresetRatio('99:1')"
+                >
+                  99:1
+                </button>
+                <button
+                  type="button"
+                  class="preset-btn"
+                  onclick="applyPresetRatio('98:2')"
+                >
+                  98:2
+                </button>
+                <button
+                  type="button"
+                  class="preset-btn"
+                  onclick="applyPresetRatio('97:3')"
+                >
+                  97:3
+                </button>
+                <button
+                  type="button"
+                  class="preset-btn"
+                  onclick="applyPresetRatio('96:4')"
+                >
+                  96:4
+                </button>
+                <button
+                  type="button"
+                  class="preset-btn"
+                  onclick="applyPresetRatio('95:5')"
+                >
+                  95:5
+                </button>
+                <button
+                  type="button"
+                  class="preset-btn"
+                  onclick="applyPresetRatio('90:10')"
+                >
+                  90:10
+                </button>
+                <button
+                  type="button"
+                  class="preset-btn"
+                  onclick="applyPresetRatio('85:15')"
+                >
+                  85:15
+                </button>
+                <button
+                  type="button"
+                  class="preset-btn"
+                  onclick="applyPresetRatio('80:20')"
+                >
+                  80:20
+                </button>
+                <button
+                  type="button"
+                  class="preset-btn"
+                  onclick="applyPresetRatio('75:25')"
+                >
+                  75:25
+                </button>
+                <button
+                  type="button"
+                  class="preset-btn"
+                  onclick="applyPresetRatio('70:30')"
+                >
+                  70:30
+                </button>
+                <button
+                  type="button"
+                  class="preset-btn"
+                  onclick="applyPresetRatio('65:35')"
+                >
+                  65:35
+                </button>
+                <button
+                  type="button"
+                  class="preset-btn"
+                  onclick="applyPresetRatio('60:40')"
+                >
+                  60:40
+                </button>
+                <button
+                  type="button"
+                  class="preset-btn"
+                  onclick="applyPresetRatio('55:45')"
+                >
+                  55:45
+                </button>
+                <button
+                  type="button"
+                  class="preset-btn"
+                  onclick="applyPresetRatio('50:50')"
+                >
+                  50:50
+                </button>
               </div>
             </div>
             <div id="portsContainer" class="ports-container">
@@ -470,24 +553,39 @@
       document.addEventListener("DOMContentLoaded", function () {
         generatePortInputs();
         updatePresetVisibility();
+
+        if (document.getElementById("inputPower").value !== "") {
+          calculateLoss();
+        }
       });
 
       // Generate port ratio inputs based on selected number of ports
-      document.getElementById("numPorts").addEventListener("change", function () {
-        generatePortInputs();
-        updatePresetVisibility();
-      });
+      document
+        .getElementById("numPorts")
+        .addEventListener("change", function () {
+          generatePortInputs();
+          updatePresetVisibility();
 
+          if (document.getElementById("inputPower").value !== "") {
+            calculateLoss();
+          }
+        });
       // Auto-calculate when input power or unit changes (if ratios are set)
-      document.getElementById("inputPower").addEventListener("input", function () {
-        tryAutoCalculate();
-      });
-      document.getElementById("powerUnit").addEventListener("change", function () {
-        tryAutoCalculate();
-      });
+      document
+        .getElementById("inputPower")
+        .addEventListener("input", function () {
+          tryAutoCalculate();
+        });
+      document
+        .getElementById("powerUnit")
+        .addEventListener("change", function () {
+          tryAutoCalculate();
+        });
 
       function tryAutoCalculate() {
-        const inputPowerValue = parseFloat(document.getElementById("inputPower").value);
+        const inputPowerValue = parseFloat(
+          document.getElementById("inputPower").value
+        );
         if (!isNaN(inputPowerValue)) {
           calculateLoss();
         }
@@ -495,10 +593,22 @@
 
       function updatePresetVisibility() {
         const numPorts = parseInt(document.getElementById("numPorts").value);
-        const presetSection = document.getElementById("presetRatios");
-        presetSection.style.display = numPorts === 2 ? "block" : "none";
-      }
 
+        const splittingSection = document.querySelector(".splitting-section");
+        const calculateBtn = document.querySelector(".calculate-btn");
+        if (numPorts === 2) {
+          splittingSection.style.display = "block";
+
+          // Hide custom ratio inputs
+          document.getElementById("portsContainer").style.display = "none";
+
+          // Hide calculate button
+          calculateBtn.style.display = "none";
+        } else {
+          splittingSection.style.display = "none";
+          calculateBtn.style.display = "none";
+        }
+      }
       function applyPresetRatio(ratioString) {
         const numPorts = parseInt(document.getElementById("numPorts").value);
 
@@ -523,36 +633,46 @@
         // Auto-calculate immediately after applying preset
         calculateLoss();
       }
-
       function generatePortInputs() {
         const numPorts = parseInt(document.getElementById("numPorts").value);
         const container = document.getElementById("portsContainer");
+
         container.innerHTML = "";
 
-        const defaultRatio = Math.round((100 / numPorts) * 10) / 10;
+        // Hide inputs for fixed split couplers
+        if (numPorts === 4 || numPorts === 8) {
+          container.style.display = "none";
+          document.querySelector(".calculate-btn").style.display = "block";
+          calculateLoss();
+          return;
+        }
 
-        for (let i = 1; i <= numPorts; i++) {
+        // Show inputs only for 2-port
+        container.style.display = "none";
+        document.querySelector(".calculate-btn").style.display = "none";
+
+        const defaultRatio = 50;
+
+        for (let i = 1; i <= 2; i++) {
           const portDiv = document.createElement("div");
           portDiv.className = "port-ratio";
           portDiv.innerHTML = `
             <label>Port ${i}</label>
             <div class="ratio-input-wrap">
-              <input type="number" id="port${i}Ratio" value="${defaultRatio}" step="0.1" min="0" max="100">
-              <span>%</span>
+                <input type="number" id="port${i}Ratio"
+                       value="${defaultRatio}" step="0.1" min="0" max="100">
+                <span>%</span>
             </div>
-          `;
+        `;
+
           container.appendChild(portDiv);
 
-          // Auto-calculate when any port ratio input changes
-          setTimeout(() => {
-            const input = document.getElementById(`port${i}Ratio`);
-            if (input) {
-              input.addEventListener("input", function () {
-                tryAutoCalculate();
-              });
-            }
-          }, 0);
+          document
+            .getElementById(`port${i}Ratio`)
+            .addEventListener("input", calculateLoss);
         }
+
+        calculateLoss();
       }
 
       function showError(message) {
@@ -576,7 +696,9 @@
       function calculateLoss() {
         hideError();
 
-        const inputPowerValue = parseFloat(document.getElementById("inputPower").value);
+        const inputPowerValue = parseFloat(
+          document.getElementById("inputPower").value
+        );
         const powerUnit = document.getElementById("powerUnit").value;
         const numPorts = parseInt(document.getElementById("numPorts").value);
 
@@ -600,32 +722,30 @@
         } else {
           inputPowerMW = inputPowerValue;
         }
+        let ratios = [];
 
-        // Get splitting ratios and validate
-        const ratios = [];
-        let totalRatio = 0;
+        if (numPorts === 4) {
+          ratios = [25, 25, 25, 25];
+        } else if (numPorts === 8) {
+          ratios = [12.5, 12.5, 12.5, 12.5, 12.5, 12.5, 12.5, 12.5];
+        } else {
+          let totalRatio = 0;
 
-        for (let i = 1; i <= numPorts; i++) {
-          const ratioInput = document.getElementById(`port${i}Ratio`);
-          if (!ratioInput) return;
-          const ratio = parseFloat(ratioInput.value);
-          if (isNaN(ratio) || ratio < 0) {
-            // Silently skip if ratios not fully entered yet
+          for (let i = 1; i <= 2; i++) {
+            const ratio = parseFloat(
+              document.getElementById(`port${i}Ratio`).value
+            );
+
+            if (isNaN(ratio) || ratio < 0) return;
+
+            ratios.push(ratio);
+            totalRatio += ratio;
+          }
+
+          if (Math.abs(totalRatio - 100) > 0.1) {
+            showError(`Total splitting ratio must equal 100%.`);
             return;
           }
-          ratios.push(ratio);
-          totalRatio += ratio;
-        }
-
-        // Validate total ratio
-        if (Math.abs(totalRatio - 100) > 0.1) {
-          // Only show error if user likely finished entering (total > 0)
-          if (totalRatio > 0) {
-            showError(
-              `Total splitting ratio must equal 100%. Current total: ${totalRatio.toFixed(1)}%`
-            );
-          }
-          return;
         }
 
         // Calculate results
@@ -659,8 +779,12 @@
           row.innerHTML = `
             <td>Port ${result.port}</td>
             <td>${result.splitRatio.toFixed(1)}%</td>
-            <td>${result.insertionLoss.toFixed(2)} <span class="unit">dB</span></td>
-            <td class="highlight">${result.outputPowerDbm.toFixed(2)} <span class="unit">dBm</span></td>
+            <td>${result.insertionLoss.toFixed(
+              2
+            )} <span class="unit">dB</span></td>
+            <td class="highlight">${result.outputPowerDbm.toFixed(
+              2
+            )} <span class="unit">dBm</span></td>
           `;
           tbody.appendChild(row);
         });
