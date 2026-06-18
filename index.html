@@ -3,6 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#667eea" />
+    <meta name="description" content="Calculate insertion loss and power distribution for fiber optic couplers" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Fiber Coupler Calc" />
+  <link rel="apple-touch-icon" href="icons/image.png" />
+    <link rel="manifest" href="manifest.json" />
+  <link rel="icon" type="image/png" href="icons/image.png" />
     <title>Fiber Optic Coupler Loss Calculator</title>
     <style>
       * {
@@ -211,6 +219,17 @@
         transform: none;
       }
 
+      .preset-btn.active {
+        background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        box-shadow: 0 2px 10px rgba(102, 126, 234, 0.5);
+        outline: 2px solid #ffd54f;
+        outline-offset: 1px;
+      }
+
+      .preset-btn.active::before {
+        content: "✓ ";
+      }
+
       .calculate-btn {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
@@ -412,98 +431,98 @@
                 <button
                   type="button"
                   class="preset-btn"
-                  onclick="applyPresetRatio('99:1')"
+                  onclick="applyPresetRatio('99:1', this)"
                 >
                   99:1
                 </button>
                 <button
                   type="button"
                   class="preset-btn"
-                  onclick="applyPresetRatio('98:2')"
+                  onclick="applyPresetRatio('98:2', this)"
                 >
                   98:2
                 </button>
                 <button
                   type="button"
                   class="preset-btn"
-                  onclick="applyPresetRatio('97:3')"
+                  onclick="applyPresetRatio('97:3', this)"
                 >
                   97:3
                 </button>
                 <button
                   type="button"
                   class="preset-btn"
-                  onclick="applyPresetRatio('96:4')"
+                  onclick="applyPresetRatio('96:4', this)"
                 >
                   96:4
                 </button>
                 <button
                   type="button"
                   class="preset-btn"
-                  onclick="applyPresetRatio('95:5')"
+                  onclick="applyPresetRatio('95:5', this)"
                 >
                   95:5
                 </button>
                 <button
                   type="button"
                   class="preset-btn"
-                  onclick="applyPresetRatio('90:10')"
+                  onclick="applyPresetRatio('90:10', this)"
                 >
                   90:10
                 </button>
                 <button
                   type="button"
                   class="preset-btn"
-                  onclick="applyPresetRatio('85:15')"
+                  onclick="applyPresetRatio('85:15', this)"
                 >
                   85:15
                 </button>
                 <button
                   type="button"
                   class="preset-btn"
-                  onclick="applyPresetRatio('80:20')"
+                  onclick="applyPresetRatio('80:20', this)"
                 >
                   80:20
                 </button>
                 <button
                   type="button"
                   class="preset-btn"
-                  onclick="applyPresetRatio('75:25')"
+                  onclick="applyPresetRatio('75:25', this)"
                 >
                   75:25
                 </button>
                 <button
                   type="button"
                   class="preset-btn"
-                  onclick="applyPresetRatio('70:30')"
+                  onclick="applyPresetRatio('70:30', this)"
                 >
                   70:30
                 </button>
                 <button
                   type="button"
                   class="preset-btn"
-                  onclick="applyPresetRatio('65:35')"
+                  onclick="applyPresetRatio('65:35', this)"
                 >
                   65:35
                 </button>
                 <button
                   type="button"
                   class="preset-btn"
-                  onclick="applyPresetRatio('60:40')"
+                  onclick="applyPresetRatio('60:40', this)"
                 >
                   60:40
                 </button>
                 <button
                   type="button"
                   class="preset-btn"
-                  onclick="applyPresetRatio('55:45')"
+                  onclick="applyPresetRatio('55:45', this)"
                 >
                   55:45
                 </button>
                 <button
                   type="button"
                   class="preset-btn"
-                  onclick="applyPresetRatio('50:50')"
+                  onclick="applyPresetRatio('50:50', this)"
                 >
                   50:50
                 </button>
@@ -549,6 +568,67 @@
     </div>
 
     <script>
+      // Register Service Worker (ensure scope is root)
+      if ("serviceWorker" in navigator) {
+        (async () => {
+          try {
+            // Use a relative path so the service worker registers correctly when the site
+            // is hosted under a subpath (for example GitHub Pages: /<user>/<repo>/)
+            const registration = await navigator.serviceWorker.register("service-worker.js");
+            console.log("Service Worker registered with scope:", registration.scope);
+
+            // Optional: listen for updates and activate immediately
+            registration.addEventListener("updatefound", () => {
+              const newWorker = registration.installing;
+              newWorker.addEventListener("statechange", () => {
+                if (newWorker.state === "installed") {
+                  if (navigator.serviceWorker.controller) {
+                    console.log("New content available; please refresh.");
+                  } else {
+                    console.log("Content cached for offline use.");
+                  }
+                }
+              });
+            });
+          } catch (error) {
+            console.log("Service Worker registration failed:", error);
+          }
+        })();
+      }
+
+      // Handle native install prompt without changing the UI.
+      // We store the event and expose a minimal programmatic API so the app can be installed
+      // via the browser prompt (for advanced users or dev tools) without showing extra UI.
+      window.deferredInstallPrompt = null;
+      window.promptInstall = async function () {
+        if (!window.deferredInstallPrompt) {
+          console.log("Install prompt not available yet.");
+          return false;
+        }
+        try {
+          window.deferredInstallPrompt.prompt();
+          const { outcome } = await window.deferredInstallPrompt.userChoice;
+          window.deferredInstallPrompt = null;
+          console.log("User install choice:", outcome);
+          return outcome === "accepted";
+        } catch (e) {
+          console.log("Install prompt failed:", e);
+          return false;
+        }
+      };
+
+      window.addEventListener("beforeinstallprompt", (e) => {
+        // Prevent the mini-infobar from appearing on mobile
+        e.preventDefault();
+        // Stash the event for later use
+        window.deferredInstallPrompt = e;
+        console.log("beforeinstallprompt captured; call promptInstall() to trigger it.");
+      });
+
+      window.addEventListener("appinstalled", () => {
+        console.log("PWA was installed.");
+      });
+
       // Initialize the page
       document.addEventListener("DOMContentLoaded", function () {
         generatePortInputs();
@@ -609,7 +689,7 @@
           calculateBtn.style.display = "none";
         }
       }
-      function applyPresetRatio(ratioString) {
+      function applyPresetRatio(ratioString, buttonElement) {
         const numPorts = parseInt(document.getElementById("numPorts").value);
 
         if (numPorts !== 2) {
@@ -624,11 +704,30 @@
           return;
         }
 
+        // Remove active class from all preset buttons
+        document.querySelectorAll(".preset-btn").forEach((btn) => {
+          btn.classList.remove("active");
+        });
+
+        // Add active class to clicked button
+        buttonElement.classList.add("active");
+
         // Apply the ratios to the input fields
         document.getElementById("port1Ratio").value = ratios[0];
         document.getElementById("port2Ratio").value = ratios[1];
 
         hideError();
+
+        // If there's no input power yet, let the user know instead of
+        // calculating silently (calculateLoss() skips quietly in that case)
+        const inputPowerValue = parseFloat(
+          document.getElementById("inputPower").value
+        );
+
+        if (isNaN(inputPowerValue)) {
+          showError("Please enter the input power to see the results.");
+          return;
+        }
 
         // Auto-calculate immediately after applying preset
         calculateLoss();
